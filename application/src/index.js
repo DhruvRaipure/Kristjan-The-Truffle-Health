@@ -17,11 +17,29 @@ import firestore from "./firebase_setup/firebase";
 // });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+// Create a new context
+const GlobalStateContext = React.createContext();
+
+const GlobalStateProvider = ({ children }) => {
+  const [globalState, setGlobalState] = React.useState({});
+
+  // You can define functions to update the global state as needed
+
+  return (
+    <GlobalStateContext.Provider value={{ globalState, setGlobalState }}>
+      {children}
+    </GlobalStateContext.Provider>
+  );
+};
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <GlobalStateProvider>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </GlobalStateProvider>
 );
+export { GlobalStateContext };
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

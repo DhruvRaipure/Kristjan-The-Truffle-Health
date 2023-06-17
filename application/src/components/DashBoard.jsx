@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import MedicalForm from "./MedicalForm";
 import ShowBills from "./ShowBills";
 import { Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { GlobalStateContext } from "../index";
 import "./dashboard.css";
 
-const DashBoard = () => {
+const DashBoard = (props) => {
+  const { globalState, setGlobalState } = React.useContext(GlobalStateContext);
   const [Authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
+    const value = globalState;
+    console.log(value.userInfo.uid);
     const loggedInUser = localStorage.getItem("authenticated");
     if (loggedInUser) {
       setAuthenticated(true);
@@ -18,6 +22,7 @@ const DashBoard = () => {
   });
 
   const handleLogOut = () => {
+    // console.log(user);
     setAuthenticated(false);
     localStorage.setItem("authenticated", false);
   };

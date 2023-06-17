@@ -5,6 +5,7 @@ import SignUp from "./components/auth/SignUp";
 import ReactDom from "react-dom/client";
 import { auth } from "./firebase_setup/firebase";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 function App() {
   return (
     <BrowserRouter>

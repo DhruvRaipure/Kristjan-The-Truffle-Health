@@ -1,30 +1,43 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase_setup/firebase";
 import { Outlet, Link } from "react-router-dom";
 import DashBoard from "../DashBoard";
 import { useNavigate } from "react-router-dom";
+import { createContext } from "react";
+import { GlobalStateContext } from "../../index";
 import "./signIn.css";
 
 const SignIn = () => {
-  const [Email, setEmail] = useState();
-  const [Password, setPassword] = useState();
+  const { globalState, setGlobalState } = React.useContext(GlobalStateContext);
+  const [Email, setEmail] = useState("dhruvr@gmail.com");
+  const [Password, setPassword] = useState("dhruv24");
   const navigate = useNavigate();
   const [authenticated, setauthenticated] = useState(
     localStorage.getItem(localStorage.getItem("authenticated") || false)
   );
+  const [user, setUser] = useState();
+  const updateState = (newValue) => {
+    setGlobalState((prevState) => ({
+      ...prevState,
+      userInfo: newValue,
+    }));
+  };
   // console.log(authenticated);
   const signIn = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, Email, Password)
       .then((userCredential) => {
-        console.log(userCredential);
+        setUser(userCredential.user.uid);
+        updateState(userCredential.user);
+
         setauthenticated(true);
         localStorage.setItem("authenticated", true);
 
         setTimeout(() => {
+          console.log(user);
           navigate("/dashboard");
-        });
+        }, 500);
       })
       .catch((error) => {
         console.log(error);
