@@ -1,0 +1,50 @@
+/* dashboard.css */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f7f7f7;
+    padding: 10px 20px;
+  }
+  
+  .mainHeading {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .logOutBtn {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    color: #4caf50;
+    cursor: pointer;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+    max-width: 400px;
+  }
+  
+  .checkPrevBtn,
+  .inputNewFormBtn {
+    flex: 1;
+    margin-right: 10px; /* Add margin-right for spacing */
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .checkPrevBtn:last-child {
+    margin-right: 0; /* Remove margin-right for the last button */
+  }
+  
+  .checkPrevBtn:hover,
+  .inputNewFormBtn:hover {
+    background-color: #45a049;
+  }
