@@ -1,33 +1,47 @@
 import React, { useState } from "react";
 import { firestore } from "../firebase_setup/firebase";
 import { addDoc, collection } from "@firebase/firestore";
+import { GlobalStateContext } from "../index";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 import "./medicalform.css";
 
 const MedicalForm = () => {
-  const ref = collection(firestore, "forms");
+  const { globalState, setGlobalState } = React.useContext(GlobalStateContext);
+  const value = globalState;
+  const reff = collection(firestore, "forms");
   const [Name, setName] = useState();
   const [Address, setAddress] = useState();
   const [HospitalName, setHospitalName] = useState();
   const [Date, setDate] = useState();
   const [Amount, setAmount] = useState();
-  const [Image, setImage] = useState();
-  const onImageChange = (e) => {
-    setImage([...e.target.files]);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const storage = getStorage();
+  const storageRef = ref(storage, "bills");
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     console.log({ Name, Address, HospitalName, Date, Amount });
-    addDoc(ref, {
+
+    const documentRef = await addDoc(reff, {
       Name: Name,
       Address: Address,
       HospitalName: HospitalName,
       Date: Date,
       Amount: Amount,
+      uid: value.userInfo.uid,
+    });
+    console.log(documentRef.id);
+    const storageRef = ref(storage, documentRef.id);
+    uploadBytes(storageRef, selectedFile).then((snapshot) => {
+      console.log("Uploaded a blob or file!");
     });
   };
   return (
     <>
       <h1 className="main">Medical Form</h1>
-      <labeL className="labelTag">
+      <label className="labelTag">
         Patient Name
         <input
           className="inpField"
@@ -38,7 +52,7 @@ const MedicalForm = () => {
             setName(e.target.value);
           }}
         />
-      </labeL>
+      </label>
       <label className="labelTag">
         Address
         <input
@@ -93,7 +107,7 @@ const MedicalForm = () => {
           label="image"
           type="file"
           placeholder="Image of Bill"
-          onChange={onImageChange}
+          onChange={handleFileChange}
         />
       </label>
 

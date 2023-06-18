@@ -1,0 +1,44 @@
+/* showbills.css */
+
+.billTable {
+    margin-top: 20px;
+  }
+  
+  .container {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .head {
+    background-color: #f2f2f2;
+  }
+  
+  .row {
+    height: 40px;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    font-weight: bold;
+  }
+  
+  .tableBody {
+    background-color: #fff;
+  }
+  
+  .tableBody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .tableBody tr:hover {
+    background-color: #e2e2e2;
+  }
+
+  img{
+    width: 100px;
+    height: 80px;
+  }

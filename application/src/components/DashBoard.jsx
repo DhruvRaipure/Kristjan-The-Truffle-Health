@@ -8,11 +8,11 @@ import "./dashboard.css";
 
 const DashBoard = (props) => {
   const { globalState, setGlobalState } = React.useContext(GlobalStateContext);
+  const value = globalState;
   const [Authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
-    const value = globalState;
     console.log(value.userInfo.uid);
     const loggedInUser = localStorage.getItem("authenticated");
     if (loggedInUser) {
@@ -22,7 +22,6 @@ const DashBoard = (props) => {
   });
 
   const handleLogOut = () => {
-    // console.log(user);
     setAuthenticated(false);
     localStorage.setItem("authenticated", false);
   };
@@ -45,7 +44,7 @@ const DashBoard = (props) => {
           Enter New Form
         </button>
       </div>
-      {toggle ? <MedicalForm /> : <ShowBills />}
+      {toggle ? <MedicalForm /> : <ShowBills uid={value.userInfo.uid} />}
     </div>
   ) : (
     <Navigate replace to="/" />

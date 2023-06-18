@@ -10,8 +10,8 @@ import "./signIn.css";
 
 const SignIn = () => {
   const { globalState, setGlobalState } = React.useContext(GlobalStateContext);
-  const [Email, setEmail] = useState("dhruvr@gmail.com");
-  const [Password, setPassword] = useState("dhruv24");
+  const [Email, setEmail] = useState();
+  const [Password, setPassword] = useState();
   const navigate = useNavigate();
   const [authenticated, setauthenticated] = useState(
     localStorage.getItem(localStorage.getItem("authenticated") || false)
@@ -35,7 +35,6 @@ const SignIn = () => {
         localStorage.setItem("authenticated", true);
 
         setTimeout(() => {
-          console.log(user);
           navigate("/dashboard");
         }, 500);
       })
